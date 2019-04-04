@@ -327,6 +327,8 @@ git config --global user.email "email"
 
 ## git
 
+https://segmentfault.com/a/1190000018688048
+
 我从master 拉取了一个新的开发分支，我想每天把 master分支上其它人的提交同步到我的开发分支，应该怎么做呢?
 
 ```
@@ -358,3 +360,110 @@ https://www.cnblogs.com/Sinte-Beuve/p/9195018.html
 https://zhuanlan.zhihu.com/p/34197548
 
 ## LayoutAnimation API
+
+https://segmentfault.com/a/1190000014682665
+
+React 中禁止页面滚动
+
+https://segmentfault.com/a/1190000018598630
+
+https://segmentfault.com/a/1190000018144698
+
+FLex布局深入理解
+
+https://segmentfault.com/a/1190000017826957
+
+https://segmentfault.com/a/1190000014619371
+
+ALlibaba 图表可视化
+
+## bizcharts
+
+https://github.com/alibaba/BizCharts 
+
+
+
+https://segmentfault.com/a/1190000018467422
+
+
+
+
+
+## create-react-app 中使用less,scss模块
+
+https://juejin.im/post/5c3c3df451882525153c2352
+
+https://juejin.im/post/5c3d67066fb9a049f06a8323
+
+
+
+## eslint+husky+prettier+lint-staged
+
+https://juejin.im/post/5c67fcaae51d457fcb4078c9
+
+
+
+这篇文章不错Eslint+prettier
+
+https://segmentfault.com/a/1190000015862803
+
+
+
+## React 中使用typeScript
+
+https://www.tslang.net/tutorials/react.html
+
+https://juejin.im/post/5c6ad288e51d457fd6233821
+
+```
+create-react-app my-app --scripts-version=react-scripts-ts
+```
+
+## Node Buffer
+
+https://www.infoq.cn/article/nodejs-about-buffer
+
+## scss 与sass 后缀名的区别
+
+http://sass.bootcss.com/docs/scss-for-sass-users/
+
+***.sass文件的后缀名比较严格,语法跟平常的css不同***
+***.scss 文件的后缀名语法跟平常的css一样,推荐是用.scss后缀名的****
+```
+//文件后缀名为sass的语法
+    body
+      background: #eee
+      font-size:12px
+    p
+      background: #0982c1
+
+    //文件后缀名为scss的语法  
+    body {
+      background: #eee;
+      font-size:12px;
+    }
+    p{
+      background: #0982c1;
+    }
+```
+
+### 如何正确学习node.js
+https://i5ting.github.io/How-to-learn-node-correctly/
+#### node 调试方法
+https://github.com/i5ting/node-debug-tutorial
+
+### 书籍推荐
+https://github.com/ruyuejun/polaris
+
+### vue项目学习
+
+https://github.com/keepfool/vue-tutorials
+
+### vue 源码解析
+https://ustbhuangyi.github.io/vue-analysis/components/lifecycle.html#beforecreate-created
+
+
+
+## node.js的 buffer
+
+https://juejin.im/post/5bbc14406fb9a05d3b3388a0
