@@ -467,3 +467,16 @@ https://ustbhuangyi.github.io/vue-analysis/components/lifecycle.html#beforecreat
 ## node.js的 buffer
 
 https://juejin.im/post/5bbc14406fb9a05d3b3388a0
+
+### chrome 真机调试
+1. 确保手机打开调试者模式
+
+2. 手机装有chrome 浏览器
+
+3. 手机要和电脑在同一个局域网内  
+
+4. pc chrome 浏览器 访问chrome://inspect/#devices
+
+   ![](../imgs/img2.png)
+
+![](../imgs/img1.png)
