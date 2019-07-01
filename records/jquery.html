@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.bootcss.com/jquery/1.2.3/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    神峨眉史蒂夫 是分开就是对方看来 <br />
+    <ul>
+      <input type="text" class="test" />
+
+      <li>sdfds手机号多少</li>
+      <li>sdfds手机号多少</li>
+    </ul>
+    <div class="modal">
+      <div class="modal-container">
+        <div class="content">
+          sdfsdf sdfsdf sdfsdfsdfsdf sdfsdfsdfsdfsdfsdf sdfsdf
+        </div>
+      </div>
+    </div>
+    <button id="btn">点击</button>
+  </body>
+  <script type="text/javascript">
+    function Beauty(selector) {
+      if (this === window) {
+        return new Beauty(selector);
+      }
+
+      this.get($B.query(selector));
+    }
+
+    let $B = Beauty;
+    Beauty.fn = Beauty.prototype = {
+      get(nums) {
+        if (Array.isArray(nums)) {
+          this.length = 0;
+          [].push.apply(this, nums);
+        } else if (typeof nums === 'number') {
+          return this[nums];
+        }
+        return null;
+      },
+      size() {
+        return this.length;
+      },
+      css(csspropsObj) {
+        if (typeof csspropsObj === 'string') {
+          return this[0].style[csspropsObj];
+        }
+        for (let i = 0; i < this.size(); i++) {
+          for (let props in csspropsObj) {
+            this[i].style[props] = csspropsObj[props];
+          }
+        }
+        return this;
+      },
+      hide() {
+        for (let i = 0; i < this.size(); i++) {
+          this[i].style.display = 'none';
+        }
+        return this;
+      },
+      click(listen) {
+        for (let i = 0; i < this.size(); i++) {
+          this[i].addEventListener('click', function() {
+            listen();
+          });
+        }
+      }
+    };
+
+    Beauty.extends = Beauty.prototype.extends = function(obj, props) {
+      if (!props) {
+        propsObj = obj;
+        obj = this;
+      }
+      for (let props in propsObj) {
+        obj[props] = propsObj[props];
+      }
+      return obj;
+    };
+
+    $B.extends({
+      query(selector) {
+        let doms = document.querySelectorAll(selector);
+        return doms.length > 0 ? Array.prototype.slice.call(doms) : null;
+      }
+    });
+    console.log($B('.modal'));
+    console.log($B('.modal')[0]);
+    console.log($B('.modal').size());
+    console.log($B('.modal').css({ background: 'red', color: 'green' }));
+    console.log($B('.modal').css('background'));
+
+    $B('#btn').click(function() {
+      $B('.modal').hide();
+    });
+  </script>
+</html>

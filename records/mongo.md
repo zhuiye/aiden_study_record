@@ -499,3 +499,34 @@ https://juejin.im/post/59bb37fa6fb9a00a554f89d2
 
 https://juejin.im/post/5c1f8e52f265da6170071e43#heading-25
 
+## TypeScript 声明文件
+
+> TypeScript 作为 JavaScript 的超集，在开发过程中不可避免要引用其他第三方的 JavaScript 的库。虽然通过直接引用可以调用库的类和方法，但是却无法使用TypeScript 诸如类型检查等特性功能。为了解决这个问题，需要将这些库里的函数和方法体去掉后只保留导出类型声明，而产生了一个描述 JavaScript 库和模块信息的声明文件。通过引用这个声明文件，就可以借用 TypeScript 的各种特性来使用库文件了.
+>
+
+声明文件的作用,就是为了让不是typescript编写的库用上typescript的 特性,
+declare  xxx  说白了就是一套规则.
+```typescript
+type GreetingLike = string | (() => string) | MyGreeter;
+declare function greet(g: GreetingLike): void;
+```
+>使用泛型来创建可重用的组件
+
+>与接口一样，直接把泛型类型放在类后面，可以帮助我们确认类的所有属性都在使用相同的类型
+
+## Web移动端利用键盘的"搜索" 按钮
+
+https://segmentfault.com/q/1010000002720680
+http://www.cnblogs.com/azhw/p/5848208.html
+
+
+
+## React-Native 处理不定宽高 
+
+<https://linxiaoru.github.io/2017/08/28/react-native-%E4%B8%8D%E5%AE%9A%E5%AE%BD%E9%AB%98%E7%BD%91%E7%BB%9C%E5%9B%BE%E7%89%87%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/>
+
+## typescript in React
+
+https://blog.csdn.net/ZYC88888/article/details/85047212
+
+https://zhuanlan.zhihu.com/p/37298514
