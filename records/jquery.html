@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <script src="https://cdn.bootcss.com/jquery/1.2.3/jquery.min.js"></script>
+    <script src="E:/hengcheng/jquery/src/jquery/jquery.js"></script>
+    <script src="E:/hengcheng/jquery/src/ajax/ajax.js"></script>
+    <script src="E:/hengcheng/jquery/src/event/event.js"></script>
+    <script src="E:/hengcheng/jquery/src/fx/fx.js"></script>
+
     <title>Document</title>
     <style>
       * {
@@ -16,7 +20,6 @@
   </head>
 
   <body>
-    神峨眉史蒂夫 是分开就是对方看来 <br />
     <ul>
       <input type="text" class="test" />
 
@@ -28,17 +31,23 @@
         <div class="content">
           sdfsdf sdfsdf sdfsdfsdfsdf sdfsdfsdfsdfsdfsdf sdfsdf
         </div>
+        <div class="content">
+          嘻嘻嘻嘻嘻嘻
+        </div>
       </div>
     </div>
     <button id="btn">点击</button>
   </body>
   <script type="text/javascript">
-    function Beauty(selector) {
+    function Beauty(a) {
+      if (typeof a === 'function') {
+        return $(document).ready(a);
+      }
       if (this === window) {
-        return new Beauty(selector);
+        return new Beauty(a);
       }
 
-      this.get($B.query(selector));
+      this.get(a && !a.nodeName ? [a] : $B.query(a));
     }
 
     let $B = Beauty;
@@ -78,6 +87,17 @@
             listen();
           });
         }
+      },
+      text() {
+        let str = '';
+        for (let i = 0; i < this.size(); i++) {
+          str += this[i].textContent;
+        }
+
+        return str;
+      },
+      each(fn, agrs) {
+        return Beauty.each(this, fn, agrs);
       }
     };
 
@@ -96,16 +116,203 @@
       query(selector) {
         let doms = document.querySelectorAll(selector);
         return doms.length > 0 ? Array.prototype.slice.call(doms) : null;
+      },
+      merge(first, second) {
+        return [...new Set([...first, ...second])];
+      },
+      each(obj, fn, agrs) {
+        if (obj.length !== 'undefined') {
+          for (let i = 0; i < obj.length; i++) {
+            fn.apply(obj[i], agrs || [obj[i], i]);
+          }
+        } else {
+          for (let props in obj) {
+            fn.apply(obj, agrs || [obj[props], i]);
+          }
+        }
+        return obj;
       }
     });
-    console.log($B('.modal'));
-    console.log($B('.modal')[0]);
-    console.log($B('.modal').size());
-    console.log($B('.modal').css({ background: 'red', color: 'green' }));
-    console.log($B('.modal').css('background'));
-
-    $B('#btn').click(function() {
-      $B('.modal').hide();
+    $B('.content').each(function() {
+      console.log(this);
     });
+
+    $B.extends({
+      get() {},
+      post() {},
+      fetch({
+        method = 'get',
+        url,
+        data = null,
+        success,
+        error,
+        headers = {}
+      }) {
+        if (method.toLocaleLowerCase() === 'get') {
+          if (data) {
+            url = url + $B.httpURLParams(data);
+          }
+        }
+
+        fetch(url, {
+          method,
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            ...headers
+          },
+          body: data
+        })
+          .then(res => res.json())
+          .then(responseData => {
+            if (typeof success === 'function') {
+              success(responseData);
+            }
+          })
+          .catch(function(err) {
+            if (typeof error === 'function') {
+              error(err);
+            }
+          });
+      },
+      httpURLParams(data) {
+        let str = '?';
+        for (let prop in data) {
+          if (data.hasOwnProperty(prop)) {
+            str +=
+              encodeURIComponent(prop) +
+              '=' +
+              encodeURIComponent(data[prop]) +
+              '&';
+          }
+        }
+        return str;
+      }
+    });
+
+    Beauty.fn.extends({
+      ready(f) {
+        if ($B.isReady) {
+          if (typeof f === 'function') {
+            f.apply.apply(document);
+          }
+        } else {
+          $B.readyList.push(f);
+        }
+
+        return this;
+      }
+    });
+    $B.extends({
+      isReady: false,
+      readyList: [],
+      ready() {
+        if (!$B.isReady) {
+          $B.isReady = true;
+          if ($B.readyList.length > 0) {
+            for (let fn of $B.readyList) {
+              if (typeof fn === 'function') {
+                fn.apply.apply(document);
+              }
+            }
+            $B.readyList = null;
+          }
+        }
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', $B.ready, false);
+    $B(function() {
+      console.log('DOMContentLoaded');
+    });
+    // console.log($B.httpURLParams({ name: 'xxx', age: '28' }));
+    // console.log($B('.modal')[0]); // console.log($B('.modal'));
+    // console.log($B('.modal').size());
+    // console.log($B('.modal').css({ background: 'red', color: 'green' }));
+    // console.log($B('.modal').css('background'));
+    // console.log($B('.content').text());
+    // runtime,mianfest,webpack 用来连接模块化的应用程序的所有代码  hot module replacement
+    // $B('#btn').click(function() {
+    //   $B('.modal').hide();
+    // });
+  </script>
+
+  <script>
+    $('.modal').click(function() {
+      $(this)
+        .css({ backgroundColor: 'red' })
+        .hide(3000);
+    });
+    /* $(function() {
+      console.log(this);
+
+      // alert('文档加载完毕???');
+    }); */
+    /*   console.log($(document));
+    window.addEventListener('load', function() {
+      alert('文档加载完毕???2');
+    });
+    window.onload = function() {
+      alert('文档加载完毕???1');
+    };
+
+    */
+    /* let el = $('.modal');
+
+    el.bind('test', function(event, data) {
+      console.log(data);
+    });
+    el.trigger('test', [{ name: 'xxx' }]); */
+
+    /* function test(a, b) {
+      console.log(a, b);
+    }
+    test.apply(window, ['xx', 'xccc']); */
+    /*
+      window.addEventListener('load', function() {
+        $.get(
+          'http://localhost:4000/peopleList',
+          '',
+          function(res, status) {
+            console.log(res);
+          },
+          'json'
+        );
+
+        // $.post('http://localhost:4000/peopleList')
+        $.ajax('GET', 'http://localhost:4000/peopleList', null, function(res) {
+          console.log(res);
+        });
+      });
+
+    */
+    /*  module.exports = {
+      mode: 'production',
+      entry: {},
+      output: {
+        path: '',
+        fileName: 'xxxx.js'
+      },
+      module: {
+        rules: [{ test: '', use: [] }]
+      },
+      plugins: {}
+    }; */
+    /* withdraw: [
+      {
+        title: '商户端：卡宝',
+        body: [{ name: '余额', value: '6% 税费 + 2元/ 笔手续费' }]
+      },
+      {
+        title: '代理端：拓展伴侣',
+        body: [{ name: '分润余额', value: '6% 税费 + 2元/ 笔手续费' }]
+      }
+    ]; */
+    /*
+    path:'/userManagement/userList', // 用户管理
+    path:'/userManagement/linkSearch' //链条查询
+    path: '/userManagement/policyList' //政策配置
+
+    */
   </script>
 </html>
