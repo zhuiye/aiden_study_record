@@ -73,3 +73,15 @@ https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/
 资源整理
 
 <https://apps.evozi.com/apk-downloader/?id=org.telegram.messenger>
+
+
+
+## 虚拟化长列表
+
+如果你的应用渲染了长列表（上百甚至上千的数据），我们推荐使用“虚拟滚动”技术。这项技术会在有限的时间内仅渲染有限的内容，并奇迹般地降低重新渲染组件消耗的时间，以及创建 DOM 节点的数量。
+
+[react-window](https://react-window.now.sh/) 和 [react-virtualized](https://bvaughn.github.io/react-virtualized/) 是热门的虚拟滚动库。 它们提供了多种可复用的组件，用于展示列表、网格和表格数据。 如果你想要一些针对你的应用做定制优化，你也可以创建你自己的虚拟滚动组件，就像 [Twitter 所做的](https://medium.com/@paularmstrong/twitter-lite-and-high-performance-react-progressive-web-apps-at-scale-d28a00e780a3)。
+
+
+
+https://zhuanlan.zhihu.com/p/54327805
