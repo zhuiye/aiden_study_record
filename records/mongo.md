@@ -505,3 +505,16 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expression
 ## gitignore 文件的编写规则
 
 https://www.cnblogs.com/jingtyu/p/6831772.html
+
+
+
+### BBR加速
+
+https://www.zhuangold.com/vultr-vps%e4%b8%bb%e6%9c%ba%e5%bf%ab%e9%80%9f%e5%ae%89%e8%a3%85shadowsocks%ef%bc%88ss%ef%bc%89%e6%95%99%e7%a8%8b-2-2/
+
+```
+wget –no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+ chmod +x bbr.sh
+ ./bbr.sh
+```
+
