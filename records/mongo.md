@@ -560,59 +560,61 @@ class SchemeForm  extends component {
 App.js
 
 ```js
-class App  extends component {
-    state={
-        data:[{name:'aa'}]
+import React from 'react';
+
+class App extends React.Component {
+  state = {
+    data: [{ name: 'aa' }],
+  };
+
+  formRefs = [];
+
+  getFormData() {
+    // 此方法进行表单验证,以及获取数据,
+  }
+
+  add = () => {
+    this.formRefs = [];
+    this.setState({
+      data: data.concat({ name: 'bbb' }),
+    });
+  };
+
+  getRef(refs, item) {
+    console.log('执行...', refs, item);
+
+    if (refs) {
+      this.formRefs.push(refs);
     }
+  }
+  /*
+     此执行结果也一样
+    <SchemeForm key={index} ref={this.getRef.bind(this,item)}/>
+  */
 
-    formRefs=[]
-
-    getFormData(){
-        // 此方法进行表单验证,以及获取数据,
-    }
-
-    add=()=>{
-      this.formRefs = [];
-      this.setState({
-            data: data.concat({ name: 'bbb' }),
-      });
-    }
-
-    getRef (refs, item) {
-            console.log('执行...', refs, item);
-
-            if (refs) {
-              this.formRefs.push(refs);
-            }
-   };
-/*
-   此执行结果也一样
-	<SchemeForm key={index} ref={this.getRef.bind(this,item)}/>
-*/
-
-
-    render(){
-        const {data}=this.state;
-         //保险起见,每次render 函数被调用都重置formRefs
-        this.formRefs=[]
-        return (<div>
-                {
-           			 data.map((item,index)=>(
-            				<SchemeForm key={index} ref={ref=>{
-                                 console.log(ref,item)
-                                 if(ref){
-                                    this.formRefs.push(ref)
-                                 }
-                               }}/>
-                            )
-        		}
-                 <button onClick={this.add}>+</button>
-
-               </div>)
-
-
-    }
+  render() {
+    const { data } = this.state;
+    // 保险起见,每次render 函数被调用都重置formRefs
+    this.formRefs = [];
+    return (
+      <div>
+        {data.map((item, index) => (
+          <SchemeForm
+            key={index}
+            ref={ref => {
+              console.log(ref, item);
+              if (ref) {
+                this.formRefs.push(ref);
+              }
+            }}
+          />
+        ))}
+        <button onClick={this.add}>+</button>
+      </div>
+    );
+  }
 }
+
 ```
 
 日志输出如下:
