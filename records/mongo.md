@@ -60,9 +60,9 @@ App.js
  * @flow
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import Hello from './src/Hello';
+import React, { Component } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
+import Hello from "./src/Hello";
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -78,18 +78,18 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
+    textAlign: "center",
+    color: "#333333",
     marginBottom: 5
   }
 });
@@ -99,8 +99,8 @@ Hello.tsx
 
 ```tsx
 // components/Hello.tsx
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export interface Props {
   name: string;
@@ -136,7 +136,7 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle
-} from 'react-native';
+} from "react-native";
 
 type StyleProps = Partial<ViewStyle | TextStyle | ImageStyle>;
 
@@ -161,14 +161,14 @@ export default StyleSheet;
 ## typescript 封装的简单例子
 
 ```tsx
-import React from 'react';
+import React from "react";
 import {
   TouchableOpacity,
   ActivityIndicator,
   ViewStyle,
   TextStyle,
   StyleSheet
-} from 'react-native';
+} from "react-native";
 /*
   声明传入组件的属性接口....
 */
@@ -506,9 +506,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expression
 
 https://www.cnblogs.com/jingtyu/p/6831772.html
 
-
-
-### BBR加速
+### BBR 加速
 
 https://www.zhuangold.com/vultr-vps%e4%b8%bb%e6%9c%ba%e5%bf%ab%e9%80%9f%e5%ae%89%e8%a3%85shadowsocks%ef%bc%88ss%ef%bc%89%e6%95%99%e7%a8%8b-2-2/
 
@@ -526,35 +524,33 @@ Memoization
 
 https://juejin.im/post/5bf7c563e51d452d705fe8d1
 
-### JS 私有属性,方法语法#
+### JS 私有属性,方法语法
 
 https://cloud.tencent.com/developer/article/1416872
 
+###
 
-
-###   
-
-## 关于React Ref  
+## 关于 React Ref
 
 ### 基本使用
 
-某些情况下,我们需要获取组件的实例,或者react 元素的Dom节点,,这个时候就得用到ref,关于ref的基本使用方法有两种:
+某些情况下,我们需要获取组件的实例,或者 react 元素的 Dom 节点,,这个时候就得用到 ref,关于 ref 的基本使用方法有两种:
 
-1. ``this.ref=createRef()  ``
-2. ``<ReactDom ref={(ref)=>{ref}}/>``
+1. `this.ref=createRef()`
+2. `<ReactDom ref={(ref)=>{ref}}/>`
 
 基本使用:https://zh-hans.reactjs.org/docs/refs-and-the-dom.html
 
 ### 项目中的使用
 
-最近在做的项目的时候,遇到一个需求.十几个输入框或者选择框组成一个表单域,然后整体对这个"表单域"进行增加.正常思维就是把这个"表单域"封装为一个组件,我就起名为了SchemeForm ,然后组件内就声明一个方法获取数据 ,就叫**getFormData()**,类的结构大致如下:
+最近在做的项目的时候,遇到一个需求.十几个输入框或者选择框组成一个表单域,然后整体对这个"表单域"进行增加.正常思维就是把这个"表单域"封装为一个组件,我就起名为了 SchemeForm ,然后组件内就声明一个方法获取数据 ,就叫**getFormData()**,类的结构大致如下:
 
 ```js
 class SchemeForm  extends component {
     getFormData(){
         // 此方法进行表单验证,以及获取数据,
     }
-    
+
     render(){
         ...
     }
@@ -581,10 +577,10 @@ class App  extends component {
             data: data.concat({ name: 'bbb' }),
       });
     }
-    
+
     getRef (refs, item) {
             console.log('执行...', refs, item);
-           
+
             if (refs) {
               this.formRefs.push(refs);
             }
@@ -594,11 +590,11 @@ class App  extends component {
 	<SchemeForm key={index} ref={this.getRef.bind(this,item)}/>
 */
 
-    
+
     render(){
         const {data}=this.state;
          //保险起见,每次render 函数被调用都重置formRefs
-        this.formRefs=[] 
+        this.formRefs=[]
         return (<div>
                 {
            			 data.map((item,index)=>(
@@ -611,10 +607,10 @@ class App  extends component {
                             )
         		}
                  <button onClick={this.add}>+</button>
-               
+
                </div>)
-               
-             
+
+
     }
 }
 ```
@@ -636,11 +632,8 @@ class App  extends component {
    输出(组件的ref,{name:'bb'})
 ```
 
-
-
-经过观察,里面的回调函数,会执行上一次render里面 ref 绑定的回调函数.是在怪哉,不明,但终归动态的获取到了组件的ref数组
+经过观察,里面的回调函数,会执行上一次 render 里面 ref 绑定的回调函数.是在怪哉,不明,但终归动态的获取到了组件的 ref 数组
 
 ### 收获
 
-经过折腾得知,ref里面的回调函数,是在render函数之后才执行的,在componentDidMount和 compnentDidUpdate 可以获取得到
-
+经过折腾得知,ref 里面的回调函数,是在 render 函数之后才执行的,在 componentDidMount 和 compnentDidUpdate 可以获取得到
