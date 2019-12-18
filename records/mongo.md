@@ -639,3 +639,31 @@ class App extends React.Component {
 ### 收获
 
 经过折腾得知,ref 里面的回调函数,是在 render 函数之后才执行的,在 componentDidMount 和 compnentDidUpdate 可以获取得到
+
+## Yarn 文档
+
+npm 与yarn 很有必要重新整理下
+
+<https://yarnpkg.com/zh-Hans/docs/cli/remove
+
+## i18n
+
+<https://www.i18next.com/overview/getting-started>
+
+<https://react.i18next.com/getting-started>
+
+## puppeteer
+
+非常有意思的一个node 库,与chrome通信,  能进行自动化测试,截图,
+
+https://zhuanlan.zhihu.com/p/40103840
+
+<https://github.com/puppeteer/puppeteer>
+
+
+
+### useCallback 优化
+
+传递一个函数给组件,容易造成子组件再次渲染,故此我们需要浅比较,所以我们得酌情用上useCallback 包裹 函数
+
+<https://zhuanlan.zhihu.com/p/56975681>
