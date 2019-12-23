@@ -669,3 +669,33 @@ https://zhuanlan.zhihu.com/p/40103840
 <https://zhuanlan.zhihu.com/p/56975681>
 
 <https://zhuanlan.zhihu.com/p/92211533>
+
+### react animate library
+
+<https://www.reddit.com/r/reactjs/comments/9kd6cl/animation_library_list/>
+
+<https://github.com/react-spring/react-spring>
+
+### Omit
+
+<https://juejin.im/post/5db159eee51d452a091fdf38>
+
+<https://juejin.im/post/5cffb431f265da1b7401f466>
+
+
+
+ScrollreveralJs
+
+<https://scrollrevealjs.org/>
+
+
+
+### 自定义滚动条 
+
+<https://github.com/malte-wessel/react-custom-scrollbars/issues>
+
+
+
+<https://github.com/mdbootstrap/perfect-scrollbar>
+
+<https://github.com/cubiq/iscroll>
