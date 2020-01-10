@@ -711,3 +711,31 @@ https://github.com/k186/pd-select/blob/master/src/components/pdSelect/selectitem
 ## 18个css animate
 
 <https://codegeekz.com/css-effect-libraries-creating-beautiful-animations/>
+
+## web中使用苹方字体
+
+<http://note.rpsh.net/posts/2015/11/18/using-pingfang-font-in-website/>
+
+## Bing api
+
+https://bing.lylares.com/detail/jQBq02UY.html
+
+### 浏览器检测
+
+https://github.com/topics/browser-detection
+
+https://github.com/lancedikson/bowser
+
+移动端浏览器侦测
+
+https://github.com/hgoebl/mobile-detect.js/
+
+混淆
+
+RSA 加解密,验证签名
+
+
+
+<https://github.com/travist/jsencrypt>
+
+<https://www.jianshu.com/p/8dc4a5f64e06>
