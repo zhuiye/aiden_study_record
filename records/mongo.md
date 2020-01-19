@@ -739,3 +739,23 @@ RSA 加解密,验证签名
 <https://github.com/travist/jsencrypt>
 
 <https://www.jianshu.com/p/8dc4a5f64e06>
+
+
+
+###   背景图片像素处理方案
+
+https://juejin.im/post/5b6503dee51d45191e0d30d2#heading-12
+
+## 1px 像素问题?
+
+<https://www.jianshu.com/p/7e63f5a32636>
+
+## React hook使用
+
+https://juejin.im/post/5d9c5f935188251e3a06bbbb
+
+### 组件间的传值考虑-----
+
+### 文件切片上传原理 值得一看
+
+<https://juejin.im/post/5dff8a26e51d4558105420ed>
