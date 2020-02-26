@@ -759,3 +759,166 @@ https://juejin.im/post/5d9c5f935188251e3a06bbbb
 ### 文件切片上传原理 值得一看
 
 <https://juejin.im/post/5dff8a26e51d4558105420ed>
+
+### ReactNative Hook 
+
+https://github.com/react-native-community/react-native-hooks
+
+
+
+### 关于封装自定义Hooks总结
+
+### 关于请求
+
+## css动画库
+
+<https://juejin.im/post/5e24f095e51d45023129baa8>
+
+<https://animista.net/>
+
+<https://dev.to/weeb/10-of-the-best-css-animation-libraries-31d7>
+
+## 图标库
+
+<https://dev.to/weeb/15-of-the-best-and-largest-icon-libraries-4p5n>
+
+
+
+## 函数功能单一性
+
+一个函数不能把所有的事情都做了,分解开来....非常要注意
+
+### 封装判断条件
+
+<https://github.com/alivebao/clean-code-js>
+
+## 色素吸取功能的实现
+
+<https://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover>
+
+<https://segmentfault.com/a/1190000009345753>
+
+## 放大效果实现 
+
+<https://juejin.im/post/5d32a0f0f265da1b6f43b103>
+
+
+
+## Can't perform a React state update on an unmounted component
+
+
+
+相信使用react 的时候,都会遇到这么个类式如下的警告
+
+Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
+
+大致的意思是,不能在已经卸载的组件上执行 state 的更新操作 ,这是不推荐的操作,在你的应用中可能会内存泄露,修复它,请在useEffect  清理函数中执行一些操作 .这也是我此处遇到的警告
+
+1.  首页请求接口获取数据,遭遇未授权,返回302,要求重定向到别的页面
+2. 由于重定向到别的页面,当前页面遭到销毁,而后续的更新还在继续,故此报了这么个警告
+
+大致代码如下:
+
+```ts
+  const loadData = useCallback(
+    async (passParams: any) => {
+      setLoading(true);
+
+      try {
+        const response = await api(passParams);
+
+        setData(response);
+       
+      } catch (err) {
+        if (err && err.code !== 302) {
+          message.warn(err ? err.cnmsg : '服务器端出现错误', 2);
+         
+        }
+      }
+     setLoading(false);
+    },
+    [api],
+  );
+```
+
+从上述代码中可以看出,即便我已经跳出页面了,还是会执行 setLoading(false);如此会出现警告,解决方案也简单.如下:
+
+```ts
+  const loadData = useCallback(
+    async (passParams: any) => {
+      setLoading(true);
+
+      try {
+        const response = await api(passParams);
+
+        setData(response);
+        setLoading(false);
+      } catch (err) {
+        if (err && err.code !== 302) {
+          message.warn(err ? err.cnmsg : '服务器端出现错误', 2);
+          setLoading(false);
+        }
+      }
+    },
+    [api],
+  );
+```
+
+在React Native 中我们也常常遇到,解决也很简单,如下 
+
+```jsx
+class ExamplePage extends Component {
+    mounted=false
+   
+    componentDidComponent() {
+        this.mounted=true
+        fetchData().then(res=>{
+            if(this.mounted){
+                this.setState(....)
+            }
+        })
+    }
+
+    componentWillUnmount (){
+        this.mounted=false
+        ....
+    }
+
+....		
+
+}
+```
+
+至于出现了此等情况,容易造成什么危害,详细请看如下链接 
+
+https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component
+
+## Typescipt 新语法,可选的链式翻译(文档)
+
+#### 可选的链式调用 
+
+可选链接的核心是,当我们写代码时,当我们遇到null或者 undefined ,可以停止运行一些表达式.语法为?.
+
+如下一般
+
+```typescript
+let x = foo?.bar.baz();
+```
+
+上述代码的意思是,当 foo被定义,就会执行后续方法,得到的值返回给x,如果foot为null或者undefined,就会直接返回undefined给变量x,更明确的说,下面代码片段也有与此功能
+
+```typescript
+let x = (foo === null || foo === undefined) ?
+    undefined :
+    foo.bar.baz();
+```
+
+注意如果bar为null 或者undefined,我们访问baz方法就会 遭遇错误..?仅仅只是检查左边的值,并没有检查余下的属性,故此
+
+```
+foo?.bar?.baz()
+```
+
+记住**.?**并不同于**&&**,
+
+**&&** 返回 falsy 值
