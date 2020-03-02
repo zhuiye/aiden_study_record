@@ -922,3 +922,26 @@ foo?.bar?.baz()
 记住**.?**并不同于**&&**,
 
 **&&** 返回 falsy 值
+
+redux 中的store 说白了,就是一定限制下对应应用的"全局变量",通过某种方式对这个变量进行,增删改.存于某个闭包函数中
+
+### 补充git 
+
+删除远程分支
+
+```
+git push -d origin branch-name
+```
+
+显示(本地)git所知道的所有本地和远程分支。
+
+```js
+git branch -a
+```
+
+若要更新远程分支的本地列表，请执行以下操作：
+
+```js
+git remote update origin --prune
+```
+
