@@ -945,3 +945,33 @@ git branch -a
 git remote update origin --prune
 ```
 
+## React 中的 keep-alive
+
+在开发场景中,我们常常有这样一个需求,页面A有一个Table列表,我们点击表格中的某一项详情,进入详情页,返回时,页面不刷新,保持原页面数据.
+
+讨论都有 如下链接:
+
+https://github.com/facebook/react/issues/12039
+
+https://github.com/Hzy0913/bolgrepo/issues/41
+
+经查,react 中并没有这样的功能,[vue中的keep-alive ](https://cn.vuejs.org/v2/guide/components-dynamic-async.html#%E5%9C%A8%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8-keep-alive)与此类式
+
+react 作者大佬有如下两种方案
+
+- 数据与组件分离,缓存需要的数据可以用redux..每次渲染用已经缓存的数据就好
+- 使用样式上的隐藏 display:none
+
+最后作者大佬还对此事盖棺定论, 我们只要单单的保持缓存的数据就足够了,没必要保存整个组件实例.想象一下如果在应用的声明周期保存N个缓存的实例,那会是什么样子 
+
+而我在项目中采用的是第一种,但也比较麻烦,因为要无时无刻关注页面的缓存数据,什么时候,清除,缓存..关注点太多,代码比较重
+
+也许应该从来从设计层面规避这个问题,
+
+我们可以在页面上弹出一个模态框,来显示信息,这样这个问题也就没有了.
+
+设计与实现产生矛盾时,如果实现麻烦,从设计下手
+
+### CSS position sticky
+
+http://www.w3cbest.com/596.html
