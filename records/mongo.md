@@ -975,3 +975,13 @@ react 作者大佬有如下两种方案
 ### CSS position sticky
 
 http://www.w3cbest.com/596.html
+
+### React Context的使用场景
+
+https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
+
+相对应对的组件树而言,是一个全局的变量,运用,有如 redux 和 react-router ,(react-native-element里的)主题,本地化,路由 
+
+组件经过其Provider
+
+包裹之后,可以访问到  history. dispatch 等数据
