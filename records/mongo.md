@@ -560,11 +560,11 @@ class SchemeForm  extends component {
 App.js
 
 ```js
-import React from 'react';
+import React from "react";
 
 class App extends React.Component {
   state = {
-    data: [{ name: 'aa' }],
+    data: [{ name: "aa" }]
   };
 
   formRefs = [];
@@ -576,12 +576,12 @@ class App extends React.Component {
   add = () => {
     this.formRefs = [];
     this.setState({
-      data: data.concat({ name: 'bbb' }),
+      data: data.concat({ name: "bbb" })
     });
   };
 
   getRef(refs, item) {
-    console.log('执行...', refs, item);
+    console.log("执行...", refs, item);
 
     if (refs) {
       this.formRefs.push(refs);
@@ -614,7 +614,6 @@ class App extends React.Component {
     );
   }
 }
-
 ```
 
 日志输出如下:
@@ -642,7 +641,7 @@ class App extends React.Component {
 
 ## Yarn 文档
 
-npm 与yarn 很有必要重新整理下
+npm 与 yarn 很有必要重新整理下
 
 <https://yarnpkg.com/zh-Hans/docs/cli/remove
 
@@ -654,17 +653,15 @@ npm 与yarn 很有必要重新整理下
 
 ## puppeteer
 
-非常有意思的一个node 库,与chrome通信,  能进行自动化测试,截图,
+非常有意思的一个 node 库,与 chrome 通信, 能进行自动化测试,截图,
 
 https://zhuanlan.zhihu.com/p/40103840
 
 <https://github.com/puppeteer/puppeteer>
 
-
-
 ### useCallback 优化
 
-传递一个函数给组件,容易造成子组件再次渲染,故此我们需要浅比较,所以我们得酌情用上useCallback 包裹 函数
+传递一个函数给组件,容易造成子组件再次渲染,故此我们需要浅比较,所以我们得酌情用上 useCallback 包裹 函数
 
 <https://zhuanlan.zhihu.com/p/56975681>
 
@@ -682,19 +679,13 @@ https://zhuanlan.zhihu.com/p/40103840
 
 <https://juejin.im/post/5cffb431f265da1b7401f466>
 
-
-
 ScrollreveralJs
 
 <https://scrollrevealjs.org/>
 
-
-
-### 自定义滚动条 
+### 自定义滚动条
 
 <https://github.com/malte-wessel/react-custom-scrollbars/issues>
-
-
 
 <https://github.com/mdbootstrap/perfect-scrollbar>
 
@@ -708,11 +699,11 @@ https://github.com/k186/pd-select/blob/master/src/components/pdSelect/selectitem
 
 ### Three.Js
 
-## 18个css animate
+## 18 个 css animate
 
 <https://codegeekz.com/css-effect-libraries-creating-beautiful-animations/>
 
-## web中使用苹方字体
+## web 中使用苹方字体
 
 <http://note.rpsh.net/posts/2015/11/18/using-pingfang-font-in-website/>
 
@@ -734,15 +725,11 @@ https://github.com/hgoebl/mobile-detect.js/
 
 RSA 加解密,验证签名
 
-
-
 <https://github.com/travist/jsencrypt>
 
 <https://www.jianshu.com/p/8dc4a5f64e06>
 
-
-
-###   背景图片像素处理方案
+### 背景图片像素处理方案
 
 https://juejin.im/post/5b6503dee51d45191e0d30d2#heading-12
 
@@ -750,7 +737,7 @@ https://juejin.im/post/5b6503dee51d45191e0d30d2#heading-12
 
 <https://www.jianshu.com/p/7e63f5a32636>
 
-## React hook使用
+## React hook 使用
 
 https://juejin.im/post/5d9c5f935188251e3a06bbbb
 
@@ -760,17 +747,15 @@ https://juejin.im/post/5d9c5f935188251e3a06bbbb
 
 <https://juejin.im/post/5dff8a26e51d4558105420ed>
 
-### ReactNative Hook 
+### ReactNative Hook
 
 https://github.com/react-native-community/react-native-hooks
 
-
-
-### 关于封装自定义Hooks总结
+### 关于封装自定义 Hooks 总结
 
 ### 关于请求
 
-## css动画库
+## css 动画库
 
 <https://juejin.im/post/5e24f095e51d45023129baa8>
 
@@ -781,8 +766,6 @@ https://github.com/react-native-community/react-native-hooks
 ## 图标库
 
 <https://dev.to/weeb/15-of-the-best-and-largest-icon-libraries-4p5n>
-
-
 
 ## 函数功能单一性
 
@@ -798,78 +781,72 @@ https://github.com/react-native-community/react-native-hooks
 
 <https://segmentfault.com/a/1190000009345753>
 
-## 放大效果实现 
+## 放大效果实现
 
 <https://juejin.im/post/5d32a0f0f265da1b6f43b103>
 
-
-
 ## Can't perform a React state update on an unmounted component
 
-
-
-相信使用react 的时候,都会遇到这么个类式如下的警告
+相信使用 react 的时候,都会遇到这么个类式如下的警告
 
 Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
 
-大致的意思是,不能在已经卸载的组件上执行 state 的更新操作 ,这是不推荐的操作,在你的应用中可能会内存泄露,修复它,请在useEffect  清理函数中执行一些操作 .这也是我此处遇到的警告
+大致的意思是,不能在已经卸载的组件上执行 state 的更新操作 ,这是不推荐的操作,在你的应用中可能会内存泄露,修复它,请在 useEffect 清理函数中执行一些操作 .这也是我此处遇到的警告
 
-1.  首页请求接口获取数据,遭遇未授权,返回302,要求重定向到别的页面
-2. 由于重定向到别的页面,当前页面遭到销毁,而后续的更新还在继续,故此报了这么个警告
+1.  首页请求接口获取数据,遭遇未授权,返回 302,要求重定向到别的页面
+2.  由于重定向到别的页面,当前页面遭到销毁,而后续的更新还在继续,故此报了这么个警告
 
 大致代码如下:
 
 ```ts
-  const loadData = useCallback(
-    async (passParams: any) => {
-      setLoading(true);
+const loadData = useCallback(
+  async (passParams: any) => {
+    setLoading(true);
 
-      try {
-        const response = await api(passParams);
+    try {
+      const response = await api(passParams);
 
-        setData(response);
-       
-      } catch (err) {
-        if (err && err.code !== 302) {
-          message.warn(err ? err.cnmsg : '服务器端出现错误', 2);
-         
-        }
+      setData(response);
+    } catch (err) {
+      if (err && err.code !== 302) {
+        message.warn(err ? err.cnmsg : "服务器端出现错误", 2);
       }
-     setLoading(false);
-    },
-    [api],
-  );
+    }
+    setLoading(false);
+  },
+  [api]
+);
 ```
 
 从上述代码中可以看出,即便我已经跳出页面了,还是会执行 setLoading(false);如此会出现警告,解决方案也简单.如下:
 
 ```ts
-  const loadData = useCallback(
-    async (passParams: any) => {
-      setLoading(true);
+const loadData = useCallback(
+  async (passParams: any) => {
+    setLoading(true);
 
-      try {
-        const response = await api(passParams);
+    try {
+      const response = await api(passParams);
 
-        setData(response);
+      setData(response);
+      setLoading(false);
+    } catch (err) {
+      if (err && err.code !== 302) {
+        message.warn(err ? err.cnmsg : "服务器端出现错误", 2);
         setLoading(false);
-      } catch (err) {
-        if (err && err.code !== 302) {
-          message.warn(err ? err.cnmsg : '服务器端出现错误', 2);
-          setLoading(false);
-        }
       }
-    },
-    [api],
-  );
+    }
+  },
+  [api]
+);
 ```
 
-在React Native 中我们也常常遇到,解决也很简单,如下 
+在 React Native 中我们也常常遇到,解决也很简单,如下
 
 ```jsx
 class ExamplePage extends Component {
     mounted=false
-   
+
     componentDidComponent() {
         this.mounted=true
         fetchData().then(res=>{
@@ -884,20 +861,20 @@ class ExamplePage extends Component {
         ....
     }
 
-....		
+....
 
 }
 ```
 
-至于出现了此等情况,容易造成什么危害,详细请看如下链接 
+至于出现了此等情况,容易造成什么危害,详细请看如下链接
 
 https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component
 
 ## Typescipt 新语法,可选的链式翻译(文档)
 
-#### 可选的链式调用 
+#### 可选的链式调用
 
-可选链接的核心是,当我们写代码时,当我们遇到null或者 undefined ,可以停止运行一些表达式.语法为?.
+可选链接的核心是,当我们写代码时,当我们遇到 null 或者 undefined ,可以停止运行一些表达式.语法为?.
 
 如下一般
 
@@ -905,15 +882,13 @@ https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-com
 let x = foo?.bar.baz();
 ```
 
-上述代码的意思是,当 foo被定义,就会执行后续方法,得到的值返回给x,如果foot为null或者undefined,就会直接返回undefined给变量x,更明确的说,下面代码片段也有与此功能
+上述代码的意思是,当 foo 被定义,就会执行后续方法,得到的值返回给 x,如果 foot 为 null 或者 undefined,就会直接返回 undefined 给变量 x,更明确的说,下面代码片段也有与此功能
 
 ```typescript
-let x = (foo === null || foo === undefined) ?
-    undefined :
-    foo.bar.baz();
+let x = foo === null || foo === undefined ? undefined : foo.bar.baz();
 ```
 
-注意如果bar为null 或者undefined,我们访问baz方法就会 遭遇错误..?仅仅只是检查左边的值,并没有检查余下的属性,故此
+注意如果 bar 为 null 或者 undefined,我们访问 baz 方法就会 遭遇错误..?仅仅只是检查左边的值,并没有检查余下的属性,故此
 
 ```
 foo?.bar?.baz()
@@ -923,9 +898,9 @@ foo?.bar?.baz()
 
 **&&** 返回 falsy 值
 
-redux 中的store 说白了,就是一定限制下对应应用的"全局变量",通过某种方式对这个变量进行,增删改.存于某个闭包函数中
+redux 中的 store 说白了,就是一定限制下对应应用的"全局变量",通过某种方式对这个变量进行,增删改.存于某个闭包函数中
 
-### 补充git 
+### 补充 git
 
 删除远程分支
 
@@ -933,7 +908,7 @@ redux 中的store 说白了,就是一定限制下对应应用的"全局变量",�
 git push -d origin branch-name
 ```
 
-显示(本地)git所知道的所有本地和远程分支。
+显示(本地)git 所知道的所有本地和远程分支。
 
 ```js
 git branch -a
@@ -947,7 +922,7 @@ git remote update origin --prune
 
 ## React 中的 keep-alive
 
-在开发场景中,我们常常有这样一个需求,页面A有一个Table列表,我们点击表格中的某一项详情,进入详情页,返回时,页面不刷新,保持原页面数据.
+在开发场景中,我们常常有这样一个需求,页面 A 有一个 Table 列表,我们点击表格中的某一项详情,进入详情页,返回时,页面不刷新,保持原页面数据.
 
 讨论都有 如下链接:
 
@@ -955,14 +930,14 @@ https://github.com/facebook/react/issues/12039
 
 https://github.com/Hzy0913/bolgrepo/issues/41
 
-经查,react 中并没有这样的功能,[vue中的keep-alive ](https://cn.vuejs.org/v2/guide/components-dynamic-async.html#%E5%9C%A8%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8-keep-alive)与此类式
+经查,react 中并没有这样的功能,[vue 中的 keep-alive ](https://cn.vuejs.org/v2/guide/components-dynamic-async.html#%E5%9C%A8%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8-keep-alive)与此类式
 
 react 作者大佬有如下两种方案
 
-- 数据与组件分离,缓存需要的数据可以用redux..每次渲染用已经缓存的数据就好
+- 数据与组件分离,缓存需要的数据可以用 redux..每次渲染用已经缓存的数据就好
 - 使用样式上的隐藏 display:none
 
-最后作者大佬还对此事盖棺定论, 我们只要单单的保持缓存的数据就足够了,没必要保存整个组件实例.想象一下如果在应用的声明周期保存N个缓存的实例,那会是什么样子 
+最后作者大佬还对此事盖棺定论, 我们只要单单的保持缓存的数据就足够了,没必要保存整个组件实例.想象一下如果在应用的声明周期保存 N 个缓存的实例,那会是什么样子
 
 而我在项目中采用的是第一种,但也比较麻烦,因为要无时无刻关注页面的缓存数据,什么时候,清除,缓存..关注点太多,代码比较重
 
@@ -976,12 +951,221 @@ react 作者大佬有如下两种方案
 
 http://www.w3cbest.com/596.html
 
-### React Context的使用场景
+### React Context 的使用场景
 
 https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
 
-相对应对的组件树而言,是一个全局的变量,运用,有如 redux 和 react-router ,(react-native-element里的)主题,本地化,路由 
+相对应对的组件树而言,是一个全局的变量,运用,有如 redux 和 react-router ,(react-native-element 里的)主题,本地化,路由
 
-组件经过其Provider
+组件经过其 Provider
 
-包裹之后,可以访问到  history. dispatch 等数据
+包裹之后,可以访问到 history. dispatch 等数据
+
+```js
+export default class WakeUpApp extends React.Component {
+  componentDidMount() {
+    if (isAndroid()) {
+      window.location.href = "cktapp://xx.xx.com";
+      setTimeout(function() {
+        window.location.href = "https://fir.im/yfckhb";
+      }, 2000);
+    } else {
+      window.location.href =
+        "https://itunes.apple.com/cn/app/%E7%95%85%E5%AE%A2%E4%BC%99%E4%BC%B4/id1449233800?mt=8";
+    }
+  }
+  render() {
+    return <div></div>;
+  }
+}
+```
+
+```jsx
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Button,
+} from 'react-native';
+import DropdownAlert from 'react-native-dropdownalert';
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import Swiper from 'react-native-swiper';
+import {
+  initialMode,
+  DarkModeProvider,
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicStyleSheet,
+  eventEmitter,
+} from 'react-native-dark-mode';
+import { WebView } from 'react-native-webview';
+eventEmitter.on('currentModeChanged', newMode => {
+  console.log('Switched to', newMode, 'mode');
+});
+const dynamicStyles = new DynamicStyleSheet({
+  container: {
+    backgroundColor: new DynamicValue('white', 'black'),
+    flex: 1,
+  },
+  text: {
+    color: new DynamicValue('black', 'white'),
+    textAlign: 'center',
+  },
+});
+console.log('App started in', initialMode, 'mode');
+const TestComponent = () => {
+  const styles = useDynamicStyleSheet(dynamicStyles);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>第三方是的范德萨</Text>
+    </View>
+  );
+};
+
+const Test2 = () => (
+  <View>
+    <Text>测试第二个</Text>
+  </View>
+);
+
+/*
+// 返回 爆率出返回键的按钮监听事件?
+<Swiper style={styles.wrapper} showsButtons={true} horizontal={false}>
+          <View style={styles.slide1}>
+            <Text style={styles.text}>Hello Swiper</Text>
+          </View>
+          <View style={styles.slide2}>
+            <Text style={styles.text}>Beautiful</Text>
+          </View>
+        </Swiper>http://192.168.10.199:3006/applyHome
+        https://github.com/react-native-community/react-native-webview/issues/24
+        其实我只要一个状态罢了,就是可以不可以返回
+*/
+
+class App extends React.Component {
+  webViewRef = null;
+  state = {
+    pushCount: 0,
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        <Button
+          title={`返回${this.state.pushCount}`}
+          onPress={() => {
+            this.webViewRef.goBack();
+          }}
+        />
+        <WebView
+          ref={ref => {
+            this.webViewRef = ref;
+          }}
+          style={{ flex: 1 }}
+          source={{ uri: 'http://192.168.10.199:3006/applyHome' }}
+          onNavigationStateChange={navState => {
+            // Keep track of going back navigation within component
+            this.canGoBack = navState.canGoBack;
+            console.log(navState);
+          }}
+          injectedJavaScript={`
+            (function() {
+              function wrap(fn) {
+                return function wrapper() {
+                  var res = fn.apply(this, arguments);
+                
+                    window.ReactNativeWebView.postMessage(window.location.href);
+                
+                  return res;
+                }
+              }
+              history.pushState = wrap(history.pushState);
+              history.back= wrap(history.pushState,'back')
+              history.replaceState = wrap(history.replaceState);
+              window.addEventListener('popstate', function() {
+                window.ReactNativeWebView.postMessage('back');
+              });
+            })();
+            true;
+  `}
+          onMessage={({ nativeEvent: state }) => {
+            console.log(state.data);
+            if (state.data === 'back') {
+              this.setState({
+                pushCount: this.state.pushCount - 1,
+              });
+            } else {
+              this.setState({
+                pushCount: this.state.pushCount + 1,
+              });
+            }
+          }}
+        />
+
+        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
+      </React.Fragment>
+    );
+  }
+}
+// https://github.com/react-native-community/react-native-webview/issues/24#issuecomment-466546563
+const styles = StyleSheet.create({
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+});
+
+export default App;
+
+/*
+  react native webView 中长按图片,不弹出菜单栏,android 没反应,ios 13 似乎不工作
+  所以说在react native webView 中分享和保存图片,只能由通过调用APP封装的功能,来达到目的
+
+  react native webView 配合 SPA 页面
+
+  从没考虑过在 App 的 webView 中 加载 SPA,今天加载,发现,设备中的物理返回键,需要进行处理,
+  而已react-route 中的 push()改变路由操作,触发不了onNavigationStateChange,折中的方案就是
+  注入监听代码,通过postMessage()回传给webView 的 onMessage(),然后保存一个状态进行处理
+
+*/
+
+```
+
