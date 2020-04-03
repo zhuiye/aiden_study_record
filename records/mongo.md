@@ -1169,3 +1169,57 @@ export default App;
 
 ```
 
+1. 编写 react 组件流程,但设计图划分块,精度看页面的结构,先分页面"上中下",再可分重用
+2. 单一功能原则,划分
+3. 创建静态版本
+4. 自上而下,自下而上看情形
+5. 单向数据流
+
+环环相扣
+jsx 原生中的事件监听 并不是真正的 html 元素元素监听
+
+JSX 中所有的字符串输入都经过转义处理,防注入攻击
+
+Babel 会把 JSX 转译成一个名为 React.createElement() 函数调用。
+
+React.createElement (生成 react 元素 { type,props}->用来被 React 构建真实 Dom)
+
+componentDidMount() 的执行,是在整个应用生成真实 Dom 之后,才执行的
+
+jsx 中内联渲染,还是在 js 中 if()else 渲染...
+
+key 元素帮助 react 知识那些元素变了,哪些没变
+
+万不得已你可以使用元素索引 index 作为 key：
+
+对于排序类的数组,决不能用 index 作为 key,一定要有唯一标识的字段作 key
+
+如果条件变得过于复杂，那你应该考虑如何提取组件
+
+context 组件树种进行传值的一个方法,共享组件数中"全局的变量"(redux 中的 store 特殊的全局变量),仅此在主题配置,以及 react-redux 中使用过
+
+类组件中订阅 context
+函数式组件中订阅 context
+
+共享组件的 state 有几种方式
+
+renderProps
+传递一个 children 的函数,该函数返回一个 jsx 元素
+
+任何被用于告知组件需要渲染什么内容的函数 prop 在技术上都可以被称为 “render prop”.
+
+HOC
+
+custom hook
+
+父子级别组件层级传递 props
+
+context 共享的全局变量传递方式
+
+shouldComponentUpdate 浅层对比 state 和 props
+
+https://segmentfault.com/a/1190000012313337
+
+MobX
+
+在我看来是更加自由的改变 state ,尽管不用通过 setState 的方式去改变状态,
