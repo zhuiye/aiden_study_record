@@ -1196,7 +1196,7 @@ key 元素帮助 react 知识那些元素变了,哪些没变
 
 如果条件变得过于复杂，那你应该考虑如何提取组件
 
-context 组件树种进行传值的一个方法,共享组件数中"全局的变量"(redux 中的 store 特殊的全局变量),仅此在主题配置,以及 react-redux 中使用过
+context 组件树中进行传值的一个方法,共享组件数中"全局的变量"(redux 中的 store 特殊的全局变量),仅此在主题配置,以及 react-redux 中使用过
 
 类组件中订阅 context
 函数式组件中订阅 context
@@ -1208,9 +1208,9 @@ renderProps
 
 任何被用于告知组件需要渲染什么内容的函数 prop 在技术上都可以被称为 “render prop”.
 
-HOC
+### HOC
 
-custom hook
+### custom hook
 
 父子级别组件层级传递 props
 
@@ -1220,6 +1220,140 @@ shouldComponentUpdate 浅层对比 state 和 props
 
 https://segmentfault.com/a/1190000012313337
 
-MobX
+### MobX
 
-在我看来是更加自由的改变 state ,尽管不用通过 setState 的方式去改变状态,
+在我看来是更加自由的改变 state ,尽管不用通过 setState 的方式去改变状态,多 store 分开管理
+
+Observable state => Redux store
+
+根据现有的状态或其它计算值衍生出的值
+Computed values => watch values 对 state 的改变进行监视 ->真的像 vue
+
+### Redux
+
+简单说一下 Redux 的底层实现..
+单个 store
+
+Redux 的实现比较简单,产生一个 redux 对象,其中有 **dispatch**,**getState**方法的实现,以及一个 state 属性,
+通过 dispatch 方法,来改变 state 的值,仅此而已,针对 react,实现了 react-redux,原理是把组件中的**state**存放于 redux 中的 state 的集中管理,
+利用 context 在组件数中传进 state ,dispatch 属性
+
+定 state
+reducer 函数改变 state
+action 定义动作的对象
+生成 store
+利用 react-redux 配合 react
+
+## createStore
+
+代码比较简单,一个工厂函数,返回一个与 redux 对象具有相同属性值的对象(后续版本,去掉了 Redux 类,直接返回了一个 redux 对象 )
+
+## todo
+
+畅客微信小程序练手(周六周日计划)
+
+## https://juejin.im/post/5e7cdee26fb9a03c6e640cc7
+
+真的是代码规范,一个函数只做一件事情
+
+## 项目中的 css 代码的管理
+
+把样式写在 style 中,还是 cssModule 呢?
+
+https://juejin.im/post/5b8373b2e51d4538e6332dbb
+
+## 响应式编程 Reactive extension
+
+everything is stream
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.min.js"></script>
+  </head>
+  <body>
+    <div id="btn">点击一下按钮</div>
+    <form id="form">
+      <div>
+        <input placeholder="xxxx" id="phone" />
+        <div style="color: red;" id="error"></div>
+      </div>
+
+      <input type="password" id="password" />
+      <input type="submit" id="submitBtn" />
+    </form>
+
+    <script>
+      window.onload = function () {
+        const { range, fromEvent, Observable, from, of, interval } = rxjs;
+        const { map, filter, scan, throttleTime, flatMap } = rxjs.operators;
+
+        const phoneDom = document.getElementById("phone");
+        const passwordDom = document.getElementById("password");
+        const error = document.getElementById("error");
+        const submitBtn = document.querySelector("#submitBtn");
+        const form = document.querySelector("#form");
+
+        const checkPhoneBlurStream = fromEvent(phoneDom, "blur");
+
+        const checkPhone = (value) => {
+          return (
+            /0?(13|14|15|18|17)[0-9]{9}/g.test(value) && value.length === 11
+          );
+        };
+
+        checkPhoneBlurStream
+          .pipe(map((event) => checkPhone(event.target.value)))
+          .subscribe((value) => {
+            if (!value) {
+              error.innerHTML = "请输入合法的字符";
+            } else {
+              error.innerHTML = "";
+            }
+          });
+
+        const formStream = fromEvent(form, "submit");
+
+        formStream
+          .pipe(
+            map((event) => {
+              event.preventDefault();
+              if (checkPhone(phoneDom.value)) {
+                return {
+                  phone: phoneDom.value,
+                  password: phoneDom.password,
+                };
+              }
+              return null;
+            }),
+            filter((value) => value !== null)
+          )
+          .subscribe((data) => {
+            loginStream(data);
+          });
+
+        const loginApi = function (data) {
+          return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+              resolve([{ success: "成功", data: data }]);
+            }, 2000);
+          });
+        };
+
+        function loginStream(data) {
+          const loginDataStream = of(data);
+          loginDataStream
+            .pipe(flatMap((data) => from(loginApi(data))))
+            .subscribe((value) => {
+              console.log(value);
+            });
+        }
+      };
+    </script>
+  </body>
+</html>
+```
