@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /**
+       * 递归通常涉及函数自身的调用
+       * 每个递归函数都必须有基线条件, 停止的条件
+       *
+       * 函数的调用, 也是用"栈"存储,称之为调用栈
+       *
+       */
+
+      function countN(n) {
+        if (n === 1 || n === 0) {
+          return 1;
+        }
+        return n * countN(n - 1);
+      }
+
+      // Dom  树 Dom 节点,内部节点 函数尾调用   https://www.ruanyifeng.com/blog/2015/04/tail-call.html
+      /*
+         叶节点:无子树
+         内部节点:有子树
+
+         节点的深度:取决于有多少个祖先
+         树的高度 取决所有节点的最大值
+
+         左子树,
+
+
+         二叉树搜索树  值(左<中<右)
+
+         键
+         中 ->都是增对父节点来的
+         先
+         后
+
+         递归:重复的操作~~,或许可能返回一个值做为上一个值的结果
+      */
+
+      class CNode {
+        constructor(key) {
+          this.key = key;
+          this.left = null;
+          this.right = null;
+        }
+      }
+      // 目标,构建一个二叉树
+      class BFSearchTree {
+        constructor() {
+          this.root = null;
+        }
+
+        push(el) {
+          const elNode = new CNode(el);
+          if (this.root === null) {
+            this.root = elNode;
+          } else {
+            this.insert(this.root, elNode);
+          }
+        }
+
+        insert(node, elNode) {
+          // if (node === null) {
+          //   console.log(node, elNode);
+          //   node = elNode;
+          //   return;
+          // }
+          if (node.key > elNode.key) {
+            if (node.left === null) {
+              node.left = elNode;
+            } else {
+              this.insert(node.left, elNode);
+            }
+          }
+
+          if (node.key < elNode.key) {
+            if (node.right === null) {
+              node.right = elNode;
+            } else {
+              this.insert(node.right, elNode);
+            }
+          }
+        }
+        // 来一个查找最小值
+
+        getMin() {
+          const current = this.root;
+          let leftNode = current.left;
+          if (leftNode === null) {
+            return current.key;
+          }
+          while (leftNode.left !== null) {
+            leftNode = leftNode.left;
+          }
+          return leftNode.key;
+        }
+
+        getMax() {
+          const current = this.root;
+          let rNode = current.right;
+          if (rNode === null) {
+            return current.key;
+          }
+          while (rNode.right !== null) {
+            rNode = rNode.right;
+          }
+          return rNode.key;
+        }
+
+        center(callback) {
+          if (this.root === null) {
+            return;
+          }
+          // 中序遍历
+          this.centerHelp(this.root, callback);
+        }
+
+        centerHelp(node, callback) {
+          if (node === null) {
+            return;
+          }
+          this.centerHelp(node.left, callback);
+          callback(node.key);
+          this.centerHelp(node.right, callback);
+        }
+        // 先序遍历
+        firstPrint(callback) {
+          if (this.root === null) {
+            return;
+          }
+          // 中序遍历
+          this.firstHelp(this.root, callback);
+        }
+
+        firstHelp(node, callback) {
+          if (node === null) {
+            return;
+          }
+          callback(node.key);
+          this.firstHelp(node.left, callback);
+          this.firstHelp(node.right, callback);
+        }
+
+        lastPrint(callback) {
+          if (this.root === null) {
+            return;
+          }
+          // 后续
+          this.lastHelp(this.root, callback);
+        }
+        lastHelp(node, callback) {
+          if (node === null) {
+            return;
+          }
+          this.lastHelp(node.left, callback);
+          this.lastHelp(node.right, callback);
+          callback(node.key);
+        }
+
+        search(key) {
+          // 搜索一个特定的值,是否在二叉树中
+          if (this.root === null) {
+            return false;
+          }
+          return this.findSearchNode(this.root, key);
+        }
+        findSearchNode(node, key) {
+          if (node === null) {
+            return false;
+          }
+          if (node.key > key) {
+            return this.findSearchNode(node.left, key);
+          }
+          if (node.key < key) {
+            return this.findSearchNode(node.right, key);
+          }
+
+          return true;
+        }
+
+        remove(key) {
+          this.root = this.removeHelp(this.root, key);
+        }
+
+        removeHelp(node, key) {
+          if (node === null) {
+            return null;
+          }
+          if (node.key > key) {
+            // 找到节点,
+            node.left = this.removeHelp(node.left);
+            return node;
+          } else if (node.key < key) {
+            node.right = this.removeHelp(node.right);
+            return node;
+          } else {
+            if (node.left === null && node.right === null) {
+              node = null;
+              return node;
+            }
+            if (node.left === null) {
+              node = node.right;
+              return node;
+            } else if (node.right === null) {
+              node = node.left; // {16}
+              return node; // {17}
+            }
+            // 第三种情况 该节点最小值
+
+            let minNode = this.getMin(node.right);
+            node.key = minNode.key;
+            node.right = this.removeHelp(node.right, minNode.key);
+            return node;
+          }
+        }
+        // 计算节点高度的代码 --如何具有递归的思维
+        getNodeHeight(node) {
+          if (node == null) {
+            return -1;
+          }
+          return (
+            Math.max(
+              this.getNodeHeight(node.left),
+              this.getNodeHeight(node.right)
+            ) + 1
+          );
+        }
+      }
+
+      // const tree = new BFSearchTree();
+      // tree.push(6);
+      // tree.push(3);
+      // tree.push(1);
+      // tree.push(9);
+      // tree.push(2);
+      // tree.push(8);
+      // tree.push(11);
+      // 2天 -> 2个人的话, 有一个蓝眼-不确定自己是不是, 第一天 ,最后
+      // 怎么确定自己是不是红眼,如何知道自己是红眼?
+      // 2个人蓝眼睛的时候,100人我看 98人蓝眼睛 1人红眼睛
+
+      /*
+                    6
+                  3   9
+                1  8   11
+                 2
+              第一种: 取左子数最左值补上
+              第二种: 如果删除没有子节点 ,最好删除
+
+          */
+
+      // console.log(tree.getMin());
+      // console.log(tree.getMax());
+
+      // tree.center((val) => {
+      //   console.log(val);
+      // });
+      // tree.firstPrint((val) => {
+      //   console.log(val);
+      // });
+      // tree.lastPrint((val) => {
+      //   console.log(val);
+      // });
+      // console.log(tree.search(5));
+
+      // 左旋 ,右旋
+      // 红黑树
+      // https://zhuanlan.zhihu.com/p/56066942
+      // https://zhuanlan.zhihu.com/p/79980618
+      // https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+      // https://zhuanlan.zhihu.com/p/31805309
+      /*
+
+        分治法, 经常需要递归
+        memories:
+
+          队列的实现 储存数据用对象存储(先进先出) ,双端队列(末尾两端操作可实现进出操作),(优先队列?)击鼓传花,以及回文字符串,利用双端队列, javascript中函数的调用以及任务队列
+          hashMap的实现,目的 为了更快的检索数据,根据对象的key 生成散列hash作为"查找时索引",模拟的数据结构也是javascript 中的对象,
+          生成的hash可能重复,即存在冲突,有两种解决的方法,分离链表,存储的数据格式为一个链表,第二线性探索法,如果某个位置已经被添加数据了
+          position+1,下一个填充,但删除要特殊处理
+
+          hash 表就是这么一个数据结构就行了,实际上是一种映射
+
+          一种数据结构:
+          时间->牺牲空间
+
+          两数之和 ->利用hash结构,差值做key 然后进行查找
+          整数反转 ->利用数学的迭代公式
+          整数回文数 ->反转一半进行比较
+          罗马数转整数 ->利用hash表
+
+          Map 与 Object 对象的区别
+          键有序
+          https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map
+
+          链表:单链表,双向链表,循环链表
+          树:二叉树,树的遍历,avl树 以及红黑树
+
+          因为大O符号表示法并不是用于来真实代表算法的执行时间的，它是用来表示代码执行时间的增长变化趋势的。
+
+      */
+
+      // function Heap() {
+
+      // }
+      /*
+              实现一个贪吃蛇游戏，贪吃蛇一开始在［0，0］位置且长度为1。每当贪吃蛇吃到食物，长度和获得的分数都增加一。
+              对于每次move输出move之后的分数。如果贪吃蛇走出边界或和自己的身体相撞则游戏结束，输出－1。下面地图中 S是Snake， F是food
+         */
+      /*
+             5 4 2 3 9
+
+             5 4 3 9 2
+
+             5 4 9 3 2
+
+             5 9 4 3 2
+
+             9 5 4 3 2
+
+             总结:冒泡,选择,插入
+
+
+
+          */
+      // 0 1 2 3 4
+
+      function bubbleSort(arr) {
+        const data = arr.slice();
+        for (let i = 0; i < data.length - 1; i++) {
+          // 减去i,表示已经比较的次数
+          for (let j = 0; j < data.length - 1 - i; j++) {
+            if (data[j] < data[j + 1]) {
+              // 交换
+              let temp = data[j];
+              data[j] = data[j + 1];
+              data[j + 1] = temp;
+            }
+          }
+        }
+        return data;
+      }
+
+      // console.log(bubbleSort([1, 2, 3, 4, 5, 6, 7]))
+      /*
+             选择排序,找每一轮中的最小值,调换位置,直到 循环完,
+             5 4 2 3 9
+
+             2 4 5 3 9
+
+             2 3 5 4 9
+
+             2 3 4 5 9
+
+             2 3 4 5 9
+
+             插入排序:
+          */
+      function selectSort(arr) {
+        const data = arr.slice();
+        for (let i = 0; i < data.length - 1; i++) {
+          let min = data[i];
+          let initMin = min;
+          let minIndex = i;
+          for (let j = i; j < data.length; j++) {
+            if (min > data[j]) {
+              min = data[j];
+              minIndex = j;
+            }
+          }
+          data[i] = min;
+          data[minIndex] = initMin;
+        }
+
+        return data;
+      }
+      /*
+             插入排序
+
+             5 4 2 3 9
+
+             4 5 2 3 9
+
+             2 4 5 3 9
+
+             2 3 4 5 9
+
+             2 3 4 5 9
+
+             插入排序的思想比较简单,但代码的实现,就有点绕
+
+            */
+
+      // console.log(selectSort([1, 8, 4, 3, 5, 1]))
+
+      function insertionSort(arr) {
+        let temp;
+        for (let i = 1; i < arr.length; i++) {
+          temp = arr[i];
+          let j = i;
+          while (j > 0 && arr[j - 1] - temp > 0) {
+            arr[j] = arr[j - 1];
+            j--;
+          }
+          // 插入
+          arr[j] = temp;
+        }
+        return arr;
+      }
+
+      // console.log(insertionSort([5, 4, 2, 3, 9]));
+      /*
+            5 4 2 3 9
+
+            5 4 2  3 9
+            5 4 2  3 9
+            5  4 2  3 9
+            2 4 5  3 9
+            2 3 4 5 9
+            归并排序
+            [2, 1, 4, 3]
+
+           const left= mergeSort([2, 1])->{
+             const left=[2],
+             const right=[1]
+
+             array=[1,2]
+           }
+
+           const right =mergeSort([4,3])
+
+           归并的思想是在是太厉害了,知道思想是一回事,实现又是一回事
+
+           分治
+
+           分解->解决->合并
+
+           分解：分解原问题为结构相同的子问题（即寻找子问题）
+           解决：当分解到容易求解的边界后，进行递归求解
+           合并：将子问题的解合并成原问题的解
+
+
+           给定一个含有数字和运算符的字符串，为表达式添加括号，
+           改变其运算优先级以求出不同的结果。你需要给出所有可能的组合的结果。有效的运算符号包含+,-以及*。
+
+
+
+
+           示例 1:输入: "2-1-1"
+            输出: [0, 2]
+            解释:
+            ((2-1)-1) = 0
+            (2-(1-1)) = 2
+
+            示例 2:输入: "2*3-4*5"
+            输出: [-34, -14, -10, -10, 10]
+            解释:
+            (2*(3-(4*5))) = -34
+            ((2*3)-(4*5)) = -14
+            ((2*(3-4))*5) = -10
+            (2*((3-4)*5)) = -10
+            (((2*3)-4)*5) = 10
+
+            有点明白了,栏图
+
+
+          */
+
+      function mergeSort(array) {
+        if (array.length > 1) {
+          // {1}
+          const { length } = array;
+          const middle = Math.floor(length / 2); // {2}
+          const left = mergeSort(array.slice(0, middle)); // {3}
+          const right = mergeSort(array.slice(middle, length)); // {4}
+          // console.log(left, right)
+
+          array = merge(left, right); // {5}
+        }
+        return array;
+      }
+
+      function merge(left, right) {
+        let i = 0; // {6}
+        let j = 0;
+        const result = [];
+        // [1,2]  [3,4]
+        while (i < left.length && j < right.length) {
+          // {7}
+          result.push(left[i] < right[j] ? left[i++] : right[j++]); // {8}
+        }
+
+        return result.concat(i < left.length ? left.slice(i) : right.slice(j)); // {9}
+      }
+
+      // console.log(mergeSort([7, 2, 1, 4, 3]));
+
+      /*
+            "2-1-1"
+            2 1-1
+          2   1 1
+          */
+      // console.log("1+23456".substring(0, 1));
+      // console.log("1+23456".slice(2));
+
+      function diffWaysToCompute(str) {
+        if (Number(str)) {
+          return [Number(str)];
+        }
+
+        let len = str.length;
+        const result = [];
+
+        for (let i = 0; i < len; i++) {
+          if (str[i] === "+" || str[i] === "-" || str[i] === "*") {
+            let left = diffWaysToCompute(str.substring(0, i));
+            let right = diffWaysToCompute(str.slice(i + 1));
+            for (let lv of left) {
+              for (let rv of right) {
+                switch (str[i]) {
+                  case "+":
+                    result.push(lv + rv);
+                    break;
+                  case "-":
+                    result.push(lv - rv);
+                    break;
+                  case "*":
+                    result.push(lv * rv);
+                }
+              }
+            }
+          }
+        }
+        return result;
+      }
+      // console.log(diffWaysToCompute("2*3-4*5"))
+      /*
+            memories
+              分治法:
+              查找子问题(这个一般不容易看出),
+              分解子问题(进行切割,一般套路,产生一个left ,right ,)
+              合并操作(然后有一个函数,对这个传入的left,right进行处理,合并出小的结果,然后对这个结构进行返回)
+              hash:为什么用hash
+              冒泡排序:一轮下来,交换位置,把最大的排在尾端,或者前端
+              选择排序:选择每一轮中的最大值,一次替换
+              插入排序:遍历交换,小的排前面,或者后面
+              :分治算法思想:归并排序,运算符组合结构,
+              有效括号:栈的运用
+              数组中去重:可以运用栈,或者,和下一个做比较,然后删除去重元素,
+              查找字符串数组中的最长公共子串:水平扫描发,分治法
+              本质跟普通的暴力法,没什么两样的,这个思想太绕了
+
+              分治法:
+              1. 寻找分割点 --一般是对半分割 生成左数据,右数据
+              2. 利用递归  --函数不断调用--- 递归结束条件,有两个返回值,一个是"结果返回值",一个是递归返回值
+              3. 解决小问题的结果函数
+          */
+
+      const searchCommonStr = function (strArr) {
+        let prefix = strArr[0];
+
+        for (let i = 1; i < strArr.length; i++) {
+          while (strArr[i].indexOf(prefix) != 0) {
+            prefix = prefix.substring(0, prefix.length - 1);
+            //  高~~,实在是神仙想法
+            if (!prefix) return "";
+          }
+        }
+        return prefix;
+      };
+
+      const searchCommonStrTwo = function (strArr) {
+        let prefix;
+        if (strArr.length === 1) {
+          return strArr[0];
+        }
+
+        if (strArr.length > 1) {
+          const length = strArr.length;
+          const mod = Math.floor(length / 2);
+          let left = searchCommonStrTwo(strArr.slice(0, mod));
+          let right = searchCommonStrTwo(strArr.slice(mod));
+          prefix = searchTowStr(left, right);
+        }
+
+        return prefix;
+
+        // let prefix = strArr[0];
+      };
+
+      function searchTowStr(left, right) {
+        let prefix = left;
+        while (right.indexOf(prefix) !== 0) {
+          prefix = prefix.substring(0, prefix.length - 1);
+          if (!prefix) return "";
+        }
+        return prefix;
+      }
+
+      // console.log(searchCommonStrTwo(["axx", "xx3", "xx1"]));
+
+      //  console.log('xxxx'.indexOf('xxa', 0)) 提两个字符串之间
+      /*
+                public int removeDuplicates(int[] nums) {
+                    if (nums.length == 0) return 0;
+                    int i = 0;
+                    for (int j = 1; j < nums.length; j++) {
+                        if (nums[j] != nums[i]) {
+                            i++;
+                            nums[i] = nums[j];
+                        }
+                    }
+                    return i + 1;
+                }
+                [1,2,3,2,3]
+
+                将两个**升序链表合并为一个新的升序链表**并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+
+                示例：
+
+
+
+            */
+      /* 链表的合并*/
+
+      class LinkNode {
+        constructor(el) {
+          this.el = el;
+          this.next = null;
+        }
+      }
+
+      class LinkTable {
+        constructor() {
+          this.header = null;
+        }
+
+        insert(el) {
+          const node = new LinkNode(el);
+          if (this.header === null) {
+            this.header = node;
+            return true;
+          }
+          let current = this.header;
+          while (current.next !== null) {
+            current = current.next;
+          }
+          current.next = node;
+          return true;
+        }
+
+        remove(el) {
+          /*
+                  1->2->4
+               */
+          let pre = this.header;
+          if (pre.el === el) {
+            this.header = pre.next;
+
+            pre.next = null;
+            return pre;
+          }
+
+          let nextNode = pre.next;
+
+          while (nextNode !== null) {
+            if (nextNode.el === el) {
+              pre.next = nextNode.next;
+              nextNode.next = null;
+              return nextNode;
+            }
+            pre = nextNode;
+            nextNode = nextNode.next;
+          }
+          return false;
+          // current.next = node;
+        }
+
+        print() {
+          let current = this.header;
+          if (current == null) {
+            return;
+          }
+          let str = current.el;
+          while (current.next !== null) {
+            current = current.next;
+
+            str = str + "->" + current.el;
+          }
+          console.log(str);
+        }
+      }
+
+      const Link1 = new LinkTable();
+      Link1.insert(1);
+
+      const Link2 = new LinkTable();
+      Link2.insert(0);
+      Link2.insert(0);
+
+      const mergeTwoLists = function (l1, l2) {
+        let header1 = l1.header;
+        let preNode2 = l2.header;
+
+        while (header1 !== null) {
+          const outVal = header1.el;
+          const node1 = l1.remove(outVal);
+          if (outVal <= preNode2.el) {
+            node1.next = preNode2;
+            l2.header = node1;
+          } else {
+            while (preNode2 !== null) {
+              if (
+                outVal > preNode2.el &&
+                ((preNode2.next !== null && preNode2.next.el >= outVal) ||
+                  preNode2.next === null)
+              ) {
+                node1.next = preNode2.next;
+                preNode2.next = node1;
+                break;
+              }
+              preNode2 = preNode2.next;
+            }
+          }
+          preNode2 = l2.header;
+          header1 = l1.header;
+        }
+
+        return l2;
+      };
+
+      // mergeTwoLists(Link1, Link2).print();
+
+      /*
+               1  3  <<====>> 2 4
+          也就是说，两个链表头部较小的一个与剩下元素的 merge 操作结果合并。
+          我们可以如下递归地定义在两个链表里的 merge 操作（忽略边界情况，比如空链表等）：
+
+          class Solution {
+              public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+                  if (l1 == null) {
+                      return l2;
+                  }
+                  else if (l2 == null) {
+                      return l1;
+                  }
+                  else if (l1.val < l2.val) {
+                      l1.next = mergeTwoLists(l1.next, l2);
+                      return l1;
+                  }
+                  else {
+                      l2.next = mergeTwoLists(l1, l2.next);
+                      return l2;
+                  }
+
+              }
+          }
+
+          反转单链表。例如链表为：1->2->3->4。反转后为 4->3->2->1
+                    
+      1 
+      2
+      3
+      4 
+
+      */
+    </script>
+  </body>
+</html>
