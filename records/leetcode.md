@@ -141,3 +141,61 @@ var plusOne = function (digits) {
       };
       ```
 ````
+
+## 判断 两个给定的二叉树是否相等
+
+此题,我采用遍历树(有中序遍历,后续遍历,以及先序遍历),然后加入数组中,比较...
+
+应该还有解法,不用遍历树两遍
+
+```js
+const p = {
+  val: 1,
+  left: {
+    val: 2,
+    left: null,
+    right: null,
+  },
+  right: null,
+};
+
+const q = {
+  val: 1,
+  left: null,
+  right: {
+    val: 2,
+    left: null,
+    right: null,
+  },
+};
+var isSameTree = function (p, q) {
+  let tree1 = [];
+  let tree2 = [];
+  helper(p, tree1);
+  helper(q, tree2);
+
+  return tree1.toString() === tree2.toString();
+};
+const helper = (tree, result) => {
+  if (tree === null) {
+    result.push("null");
+    return;
+  }
+  const left = helper(tree.left, result);
+  const right = helper(tree.right, result);
+  result.push(tree.val);
+};
+
+// 是在是妙~~~~~~~~~~,完全没有想到
+
+function isSameTree(p, q) {
+  // p and q are both null
+  if (p == null && q == null) return true;
+  // one of p and q is null
+  if (q == null || p == null) return false;
+  if (p.val != q.val) return false;
+  return isSameTree(p.right, q.right) && isSameTree(p.left, q.left);
+}
+
+console.log(isSameTree(p, q));
+```
