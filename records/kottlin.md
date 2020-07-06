@@ -120,6 +120,31 @@ class SnakeModule(reactContext: ReactApplicationContext):ReactContextBaseJavaMod
         }
 ```
 
+## js 端传入一个数组到原生端的转换
+
+```kotlin
+   @ReactMethod
+    fun simpleDialog(title:String,items:ReadableArray,theme:Int,callback: Callback){
+       val stringArr=items.toArrayList().toArray()  // 这里需要转换为java 中的 数组类型
+       val size=stringArr.size                     // 再进行kotlin 的转化
+       val innerItems= arrayOfNulls<String>(size)
+
+       for(index in 0 until size){
+           innerItems[index]=stringArr[index].toString()
+       }
+
+        // 转化得到  innerItems->string []
+
+        MaterialAlertDialogBuilder(currentActivity,theme)
+                .setTitle(title)
+                .setItems(innerItems) { dialog, which ->
+                    callback.invoke(which)
+                    // Respond to item chosen
+                }
+                .show()
+    }
+```
+
 ## 遇到错误
 
 Attempt to invoke virtual method 'double java.lang.Double.doubleValue()' on a null object reference getDouble
@@ -128,12 +153,14 @@ Attempt to invoke virtual method 'double java.lang.Double.doubleValue()' on a nu
 
 ```js
 NativeModules.SnakeModule.show(
-  '哈还',
-  NativeModules.SnakeModule.DURATION_SHORT_KEY,
+  "哈还",
+  NativeModules.SnakeModule.DURATION_SHORT_KEY
 );
 ```
 
 原因是传入空字符串,暴露出的变量,并不是 DURATION_SHORT_KEY,而是 SHORT, 要知道暴露什么变量,我们可以 console.log(NativeModules.SnakeModule)
+
+还有就是报 Didn't find class "androidx.widget.AppCompatTextView" 没有找到,其实就是 xml 那里引入包错误了,在 androidx.widget 下面没有 AppCompatTextView,通过 android studio 就可以 排除错误了
 
 ### 学习链接
 
@@ -142,3 +169,13 @@ https://proandroiddev.com/react-native-bridge-with-kotlin-b2afde2f70b
 https://callstack.com/blog/writing-a-native-module-for-react-native-using-kotlin/
 
 https://juejin.im/post/5e1d7eb06fb9a02ffe7028f1#heading-7
+
+https://juejin.im/post/5dc14bfc6fb9a04aac11355e
+
+### androidX 迁移
+
+https://www.jianshu.com/p/4844cd2568c5
+
+### android 储存知识
+
+https://juejin.im/post/5de7772af265da3398561133

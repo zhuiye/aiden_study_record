@@ -9,3 +9,13 @@ https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterst
 ## Parameters
 
 获取函数参数值的类型
+
+## window 下 杀死 和关闭某个端口号
+
+### 查找
+
+netstat -ano | findstr "8081"
+
+### 杀死
+
+tskill pid
